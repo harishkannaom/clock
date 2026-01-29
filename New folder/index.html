@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Month Photo Clock</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: background-image 1s ease-in-out;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0.45);
+      padding: 30px 40px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    .time {
+      font-size: 3.5rem;
+      font-weight: bold;
+    }
+
+    .date {
+      margin-top: 10px;
+      font-size: 1.3rem;
+      opacity: 0.9;
+    }
+
+    .month {
+      margin-top: 6px;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="overlay">
+    <div class="time" id="time"></div>
+    <div class="date" id="date"></div>
+    <div class="month" id="month"></div>
+  </div>
+
+  <script>
+    const monthImages = [
+      "https://images.unsplash.com/photo-1542444459-db63c3c4e8c1", // Jan
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba", // Feb
+      "https://images.unsplash.com/photo-1527766833261-b09c3163a791", // Mar
+      "https://images.unsplash.com/photo-1491002052546-bf38f186af56", // Apr
+      "https://images.unsplash.com/photo-1501004318641-b39e6451bec6", // May
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee", // Jun
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e", // Jul
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470", // Aug
+      "https://images.unsplash.com/photo-1502082553048-f009c37129b9", // Sep
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429", // Oct
+      "https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6", // Nov
+      "https://images.unsplash.com/photo-1516455207990-7a41ce80f7ee"  // Dec
+    ];
+
+    function updateTime() {
+      const now = new Date();
+
+      const hours = now.getHours().toString().padStart(2, "0");
+      const minutes = now.getMinutes().toString().padStart(2, "0");
+      const seconds = now.getSeconds().toString().padStart(2, "0");
+
+      document.getElementById("time").innerText = `${hours}:${minutes}:${seconds}`;
+
+      document.getElementById("date").innerText =
+        now.toLocaleDateString("en-IN", { weekday: "long", day: "numeric", year: "numeric" });
+
+      document.getElementById("month").innerText =
+        now.toLocaleString("en-IN", { month: "long" });
+
+      document.body.style.backgroundImage =
+        `url(${monthImages[now.getMonth()]})`;
+    }
+
+    updateTime();
+    setInterval(updateTime, 1000);
+  </script>
+
+</body>
+</html>
